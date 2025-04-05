@@ -38,7 +38,7 @@ const foodApi = createApi({
         }),
         addDish: builder.mutation({
             query: (newInfor) => ({
-                url: '/app/api/dishes', 
+                    url: '/app/salus/food-image', 
                 method: 'POST',
                 body: newInfor,
             }),
@@ -51,5 +51,5 @@ const foodApi = createApi({
 });
 
 
-export const { useAddInforMutation } = foodApi;
+export const { useAddInforMutation, useAddDishMutation } = foodApi;
 export default foodApi;

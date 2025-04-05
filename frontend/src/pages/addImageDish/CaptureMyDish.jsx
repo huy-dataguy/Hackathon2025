@@ -3,6 +3,8 @@ import React from 'react'
 import { useState } from 'react'
 import InputField from './InputField'
 import SelectField from './SelectField'
+import { useAddDishMutation } from '../../redux/features/dish/foodApi'
+
 
 import { useForm } from 'react-hook-form'
 // import { useAdddishMutation } from '../../../redux/features/books/booksApi';
@@ -12,80 +14,38 @@ import Swal from 'sweetalert2';
 const CaptureMyDish = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [imageFile, setimageFile] = useState(null);
-    // const [addDish, { isLoading, isError }] = useAdddishMutation();
+    const [addDish, { isLoading, isError }] = useAddDishMutation();
     const [imageFileName, setimageFileName] = useState('')
 
 
-    // const onSubmit = async (data) => {
-    //     const formData = new FormData();
-
-    //     // Thêm thông tin dish vào FormData
-    //     formData.append('title', data.title);
-    //     formData.append('coverImage', imageFile); // Đảm bảo imageFile có dữ liệu
-
-    //     console.log(formData)
-    //     // Gửi dữ liệu FormData lên server
-    //     // try {
-    //     //     await addDish(formData).unwrap();
-    //     //     Swal.fire({
-    //     //         title: "Dish added",
-    //     //         text: "Your dish is uploaded successfully!",
-    //     //         icon: "success",
-    //     //         showCancelButton: true,
-    //     //         confirmButtonColor: "#3085d6",
-    //     //         cancelButtonColor: "#d33",
-    //     //         confirmButtonText: "Yes, It's Okay!"
-    //     //     });
-    //     //     reset();
-    //     //     setimageFileName('');
-    //     //     setimageFile(null);
-    //     // } catch (error) {
-    //     //     console.error(error);
-    //     //     Swal.fire({
-    //     //         title: 'Error',
-    //     //         text: 'Failed to add dish. Please try again.',
-    //     //         icon: 'error'
-    //     //     });
-    //     // }
-    // }
-
     const onSubmit = async (data) => {
-        // Kiểm tra xem có file ảnh được chọn không
-        if (!imageFile) {
-            Swal.fire({
-                title: 'Error',
-                text: 'Please select an image file',
-                icon: 'error',
-            });
-            return;
-        }
+
 
         const formData = new FormData();
-        formData.append('title', data.title);
-        formData.append('coverImage', imageFile);
+        formData.append('foodName', data.title);
+        formData.append('file', imageFile);
 
         // In formData ra console để kiểm tra dữ liệu trước khi gửi
         console.log('FormData:', formData);
 
         // Đoạn này có thể comment lại để test mà không cần API
-        // try {
-        //     await addDish(formData).unwrap();
-        //     Swal.fire({
-        //         title: "Dish added",
-        //         text: "Your dish is uploaded successfully!",
-        //         icon: "success",
-        //     });
-        // } catch (error) {
-        //     console.error(error);
-        //     Swal.fire({
-        //         title: 'Error',
-        //         text: 'Failed to add dish. Please try again.',
-        //         icon: 'error',
-        //     });
-        // }
+        try {
+            await addDish(formData).unwrap();
+            Swal.fire({
+                title: "Dish added",
+                text: "Your dish is uploaded successfully!",
+                icon: "success",
+            });
+        } catch (error) {
+            console.error(error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to add dish. Please try again.',
+                icon: 'error',
+            });
+        }
 
         // Test kết quả của FormData
-        alert('Test: Form data ready to send. Check console for details.');
     };
 
 
@@ -108,7 +68,7 @@ const CaptureMyDish = () => {
                     {/* Reusable Input Field for Title */}
                     <InputField
                         label="Title"
-                        name="title"
+                        name="foodName"
                         placeholder="Enter dish title"
                         register={register}
                     />
