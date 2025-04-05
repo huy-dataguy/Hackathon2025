@@ -3,15 +3,17 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useEffect, useState } from 'react';
 import DishCard from '../pages/Dish/DishCard';
 
+// Import Swiper React components
 
 // Import Swiper styles
 import 'swiper/css';
+import 'swiper/css/grid';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
+import { Keyboard, Pagination, Navigation } from 'swiper/modules';
 
 // import required modules
-import { Pagination, Navigation } from 'swiper/modules';
 
 const History = () => {
 
@@ -27,28 +29,31 @@ const History = () => {
 
 
   return (
-    <div>
+    <div className='my-20'>
       <>
-      <Swiper
-        slidesPerView={2}
-        spaceBetween={20}
-        loop={true}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Pagination, Navigation]}
-        className="mySwiper"
+        <Swiper
+          slidesPerView={2}
+          spaceBetween={30}
+          keyboard={{
+            enabled: true,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          navigation={true}
+          modules={[Keyboard, Pagination, Navigation]}
+          className="mySwiper"
         >
-        {
-          dishes.length > 0 && dishes.map((dish, index) => (
-            <SwiperSlide key={index}>
-              <DishCard dish={dish} />
-            </SwiperSlide>
-          ))
-        }
-      </Swiper>
-    </>
+          {
+            dishes.length > 0 && dishes.map((dish, index) => (
+              <SwiperSlide key={index}>
+                <DishCard dish={dish} />
+              </SwiperSlide>
+            ))
+          }
+        </Swiper>
+
+      </>
 
 
     </div>

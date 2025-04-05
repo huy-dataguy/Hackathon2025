@@ -16,6 +16,8 @@ const Navbar = () => {
         { name: 'Home', href: '/' },
         { name: 'Assistant', href: '/assistant' },
         { name: 'History', href: '/history' },
+        { name: 'Capture My Dish', href: '/upload_dish' },
+
     ];
 
     const profile = [

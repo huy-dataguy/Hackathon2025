@@ -1,0 +1,134 @@
+import React from 'react'
+
+import { useState } from 'react'
+import InputField from './InputField'
+import SelectField from './SelectField'
+
+import { useForm } from 'react-hook-form'
+// import { useAdddishMutation } from '../../../redux/features/books/booksApi';
+import Swal from 'sweetalert2';
+
+
+const CaptureMyDish = () => {
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const [imageFile, setimageFile] = useState(null);
+    // const [addDish, { isLoading, isError }] = useAdddishMutation();
+    const [imageFileName, setimageFileName] = useState('')
+
+
+    // const onSubmit = async (data) => {
+    //     const formData = new FormData();
+
+    //     // Thêm thông tin dish vào FormData
+    //     formData.append('title', data.title);
+    //     formData.append('coverImage', imageFile); // Đảm bảo imageFile có dữ liệu
+
+    //     console.log(formData)
+    //     // Gửi dữ liệu FormData lên server
+    //     // try {
+    //     //     await addDish(formData).unwrap();
+    //     //     Swal.fire({
+    //     //         title: "Dish added",
+    //     //         text: "Your dish is uploaded successfully!",
+    //     //         icon: "success",
+    //     //         showCancelButton: true,
+    //     //         confirmButtonColor: "#3085d6",
+    //     //         cancelButtonColor: "#d33",
+    //     //         confirmButtonText: "Yes, It's Okay!"
+    //     //     });
+    //     //     reset();
+    //     //     setimageFileName('');
+    //     //     setimageFile(null);
+    //     // } catch (error) {
+    //     //     console.error(error);
+    //     //     Swal.fire({
+    //     //         title: 'Error',
+    //     //         text: 'Failed to add dish. Please try again.',
+    //     //         icon: 'error'
+    //     //     });
+    //     // }
+    // }
+
+    const onSubmit = async (data) => {
+        // Kiểm tra xem có file ảnh được chọn không
+        if (!imageFile) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Please select an image file',
+                icon: 'error',
+            });
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('title', data.title);
+        formData.append('coverImage', imageFile);
+
+        // In formData ra console để kiểm tra dữ liệu trước khi gửi
+        console.log('FormData:', formData);
+
+        // Đoạn này có thể comment lại để test mà không cần API
+        // try {
+        //     await addDish(formData).unwrap();
+        //     Swal.fire({
+        //         title: "Dish added",
+        //         text: "Your dish is uploaded successfully!",
+        //         icon: "success",
+        //     });
+        // } catch (error) {
+        //     console.error(error);
+        //     Swal.fire({
+        //         title: 'Error',
+        //         text: 'Failed to add dish. Please try again.',
+        //         icon: 'error',
+        //     });
+        // }
+
+        // Test kết quả của FormData
+        alert('Test: Form data ready to send. Check console for details.');
+    };
+
+
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setimageFile(file);
+            setimageFileName(file.name);
+        }
+    }
+
+    return (
+        <div>
+            <div className="max-w-lg   mx-auto md:p-6 p-3 bg-white rounded-lg shadow-md">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Add New Dish</h2>
+
+                {/* Form starts here */}
+                <form onSubmit={handleSubmit(onSubmit)} className=''>
+                    {/* Reusable Input Field for Title */}
+                    <InputField
+                        label="Title"
+                        name="title"
+                        placeholder="Enter dish title"
+                        register={register}
+                    />
+
+                    <div className="mb-4">
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">Dish Image</label>
+                        <input type="file" accept="image/*" onChange={handleFileChange} className="mb-2 w-full" />
+                        {imageFileName && <p className="text-sm text-gray-500">Selected: {imageFileName}</p>}
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    >
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    )
+}
+export default CaptureMyDish
+

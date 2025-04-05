@@ -5,6 +5,7 @@ import Assistant from "../pages/Assistant";
 import History from "../pages/History";
 import Profile from "../components/Profile";
 import SettingProfile from "../pages/SettingProfile";
+import CaptureMyDish from "../pages/addImageDish/CaptureMyDish";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,12 @@ const router = createBrowserRouter([
       {
         path: "/settings",
         element: <SettingProfile />
-      }
+      },
+      {
+        path: "/upload_dish",
+        element: <CaptureMyDish />
+      },
+      
 
     ]
   },
