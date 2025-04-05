@@ -15,6 +15,7 @@ const Navbar = () => {
     const navigation = [
         { name: 'Home', href: '/' },
         { name: 'Assistant', href: '/assistant' },
+        { name: 'Salus Assistant', href: '/chat' },
         { name: 'History', href: '/history' },
         { name: 'Capture My Dish', href: '/upload_dish' },
 
@@ -22,7 +23,7 @@ const Navbar = () => {
 
     const profile = [
         {name: "Profile", href:"/profile"},
-        {name: "Settings", href:"/settings"},
+        {name: "Chat", href:"/salus"},
         {name: "Logout", href:"/logout"}
       
       ]

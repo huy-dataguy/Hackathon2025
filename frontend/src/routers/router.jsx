@@ -6,7 +6,8 @@ import History from "../pages/History";
 import Profile from "../components/Profile";
 import SettingProfile from "../pages/SettingProfile";
 import CaptureMyDish from "../pages/addImageDish/CaptureMyDish";
-
+import Diet from "../pages/Diet";
+import Chat from "../pages/chat/Chat";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,13 +30,18 @@ const router = createBrowserRouter([
         element: <Profile />
       },
       {
-        path: "/settings",
-        element: <SettingProfile />
+        path: "/chat",
+        element: <Chat />
       },
       {
         path: "/upload_dish",
         element: <CaptureMyDish />
       },
+      {
+        path: "/diet",
+        element: <Diet />
+      },
+      
       
 
     ]
