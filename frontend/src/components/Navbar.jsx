@@ -13,18 +13,18 @@ const Navbar = () => {
     const currentUser = true; // This should be dynamic based on authentication state
 
     const navigation = [
-        { name: 'Home', href: '/' },
-        { name: 'Diet', href: '/assistant' },
-        { name: 'Salus', href: '/chat' },
-        { name: 'History', href: '/history' },
-        { name: 'Capture My Dish', href: '/upload_dish' },
+        { name: 'Trang chủ', href: '/' },
+        { name: 'Hôm nay ăn gì', href: '/diet' },
+        { name: 'Salus Chat', href: '/chat' },
+        { name: 'Lịch sử ăn uống', href: '/history' },
+        { name: 'Bữa ăn của tôi', href: '/upload_dish' },
 
     ];
 
     const profile = [
-        {name: "Profile", href:"/profile"},
-        {name: "Chat", href:"/salus"},
-        {name: "Logout", href:"/logout"}
+        {name: "Trang cá nhân", href:"/profile"},
+        {name: "Cài đặt", href:"/"},
+        {name: "Đăng xuất", href:"/logout"}
       
       ]
     

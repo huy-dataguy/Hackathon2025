@@ -4,7 +4,7 @@ import getChatUrl from '../../../utils/getChatUrl';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: `${getBaseUrl()}`,
-   
+
     credentials: 'include',
     prepareHeaders: (headers) => {
         const token = localStorage.getItem('token');
@@ -46,7 +46,7 @@ const foodApi = createApi({
             }),
             invalidatesTags: ['Dishes'],
         }),
-      
+
 
         fetchHistory: builder.query({
             query: ({ from, to }) => ({
@@ -56,15 +56,23 @@ const foodApi = createApi({
             invalidatesTags: ['Dishes'], // This will invalidate the 'Dishes' tag
         }),
 
-     
-          
+        fetchSuggestion: builder.query({
+            query: () => ({
+                url: '/app/salus/planning',
+            }),
+            invalidatesTags: ['Diet'],
+        }),
+
+        fetchSuggestFood: builder.query({
+            query: () => ({
+                url: '/app/salus/suggestion',
+            }),
+        })
         
-       
+
+        })
+    });
 
 
-    })
-});
-
-
-export const { useAddInforMutation, useAddDishMutation, useFetchHistoryQuery, useGetPlanningMutation} = foodApi;
-export default foodApi;
+    export const { useAddInforMutation, useAddDishMutation, useFetchHistoryQuery, useGetPlanningMutation, useFetchSuggestionQuery, useFetchSuggestFoodQuery } = foodApi;
+    export default foodApi;

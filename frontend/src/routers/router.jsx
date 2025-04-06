@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../pages/Home";
-import Assistant from "../pages/Assistant";
 import History from "../pages/History";
 import Profile from "../components/Profile";
 import SettingProfile from "../pages/SettingProfile";
@@ -20,8 +19,8 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/assistant",
-        element: <Assistant />
+        path: "/diet",
+        element: <Diet />
       },
       {
         path: "/history",

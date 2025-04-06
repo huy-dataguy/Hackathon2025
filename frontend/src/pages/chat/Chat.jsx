@@ -11,12 +11,13 @@ export function Chat() {
   const [messagesContainerRef, messagesEndRef] = useScrollToBottom();
   const [messages, setMessages] = useState([]);
   const [question, setQuestion] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const messageHandlerRef = useRef(null);
 
-  const [sendMessage] = useSendMessageMutation(); 
+  const [sendMessage, isLoading, error] = useSendMessageMutation();
 
+  if (isLoading) return <div className="text-center py-6">Đang tải dữ liệu...</div>;
+  if (error) return <div className="text-center text-red-600 py-6">Đã xảy ra lỗi khi tải dữ liệu.</div>;
   const cleanupMessageHandler = () => {
     if (messageHandlerRef.current && socket) {
       socket.removeEventListener("message", messageHandlerRef.current);
@@ -25,17 +26,19 @@ export function Chat() {
   };
   async function handleSubmit(text) {
     if (!text) return;
-  
+
     const traceId = uuidv4();
     setMessages(prev => [...prev, { content: text, role: "user", id: traceId }]);
-    setIsLoading(true);
     setQuestion("");
-  
+
+
+
+
     try {
       const res = await sendMessage(text).unwrap();
-  
+
       const content = res?.response || "Không có phản hồi.";
-  
+
       setMessages(prev => [
         ...prev,
         {
@@ -54,7 +57,7 @@ export function Chat() {
       setIsLoading(false);
     }
   }
-  
+
 
   return (
     <div className="flex flex-col min-w-0 h-dvh bg-background">

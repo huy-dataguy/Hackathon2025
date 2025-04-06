@@ -3,16 +3,12 @@ import InputField from './addImageDish/InputField';
 import SelectField from './addImageDish/SelectField';
 import { useForm } from 'react-hook-form';
 import { useAddInforMutation } from '../redux/features/dish/foodApi';
-
 import Swal from 'sweetalert2';
 
 const Home = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
-
   const [addInfor, { isLoading, isError }] = useAddInforMutation();
 
-
-  
   const onSubmit = async (data) => {
     const formattedData = {
       ...data,
@@ -23,113 +19,97 @@ const Home = () => {
       isVegetarian: Number(data.isVegetarian),
       homeCook: Number(data.homeCook),
     };
-  
+
     try {
-      console.log(formattedData)
+      console.log(formattedData);
       const res = await addInfor(formattedData).unwrap(); 
-      Swal.fire('Success', 'Data has been submitted!', 'success');
+      Swal.fire('Thành công', 'Dữ liệu đã được gửi thành công!', 'success');
       reset(); 
       console.log(res);
     } catch (error) {
-      Swal.fire('Error', 'Failed to submit data', 'error');
+      Swal.fire('Lỗi', 'Gửi dữ liệu thất bại!', 'error');
       console.error(error);
     }
   };
-  
-
 
   return (
     <div className="max-w-sm mx-auto mt-8">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {/* //ok */}
-        <input
-          label="Enter your age"
-          name="email"
-          type="email"
-        />
-        {/* ok */}
+        {/* Tuổi */}
         <InputField
-          label="Enter your age"
+          label="Nhập tuổi của bạn"
           name="age"
           type="number"
           register={register}
-          placeholder="Enter your age"
+          placeholder="Ví dụ: 25"
         />
 
-        {/* ok */}
+        {/* Chiều cao */}
         <InputField
-          label="Enter your height (in cm)"
+          label="Nhập chiều cao (cm)"
           name="height"
           type="number"
           register={register}
-          placeholder="Enter your height"
+          placeholder="Ví dụ: 160"
         />
-{/* ok */}
+
+        {/* Cân nặng */}
         <InputField
-          label="Enter your weight (in kg)"
+          label="Nhập cân nặng (kg)"
           name="weight"
           type="number"
           register={register}
-          placeholder="Enter your weight"
+          placeholder="Ví dụ: 60"
         />
 
-        {/* <SelectField
-          label="Gender"
-          name="gender"
-          register={register}
-          options={[
-            { label: 'Male', value: 'male' },
-            { label: 'Female', value: 'female' },
-          ]}
-        /> */}
-
-
-{/* ok */}
+        {/* Mức độ hoạt động thể thao */}
         <SelectField
-          label="Activity Level"
+          label="Mức độ tập thể thao (ngày/tuần)"
           name="sportActivity"
           register={register}
           options={[
-            { label: '1/7', value: '1' },
-            { label: '2/7', value: '2' },
-            { label: '3/7', value: '3' },
-            { label: '4/7', value: '4' },
-            { label: '5/7', value: '5' },
-            { label: '6/7', value: '6' },
-            { label: '7/7', value: '7' },
-          ]}
-        />
-{/* ok */}
-        <SelectField
-          label="Diet Type"
-          name="isVegetarian"
-          register={register}
-          options={[
-            { label: 'Vegetarian', value: '1' },
-            { label: 'Non-Vegetarian', value: '0' },
+            { label: '1 ngày/tuần', value: '1' },
+            { label: '2 ngày/tuần', value: '2' },
+            { label: '3 ngày/tuần', value: '3' },
+            { label: '4 ngày/tuần', value: '4' },
+            { label: '5 ngày/tuần', value: '5' },
+            { label: '6 ngày/tuần', value: '6' },
+            { label: '7 ngày/tuần', value: '7' },
           ]}
         />
 
-{/* ok */}
+        {/* Chế độ ăn */}
         <SelectField
-          label="Taste Preference"
+          label="Bạn có ăn chay không?"
+          name="isVegetarian"
+          register={register}
+          options={[
+            { label: 'Ăn chay', value: '1' },
+            { label: 'Không ăn chay', value: '0' },
+          ]}
+        />
+
+        {/* Vị ưa thích */}
+        <SelectField
+          label="Khẩu vị yêu thích"
           name="taste"
           register={register}
           options={[
-            { label: 'Sweet', value: 'sweet' },
-            { label: 'Salty', value: 'salty' },
-            { label: 'Spicy', value: 'spicy' },
-            { label: 'Sour', value: 'sour' },
+            { label: 'Ngọt', value: 'sweet' },
+            { label: 'Mặn', value: 'salty' },
+            { label: 'Cay', value: 'spicy' },
+            { label: 'Chua', value: 'sour' },
           ]}
         />
-{/* oik */}
+
+        {/* Loại bữa ăn */}
         <SelectField
-          label="Meal Type"
+          label="Loại bữa ăn thường dùng"
           name="homeCook"
           register={register}
           options={[
-            { label: 'Homemade', value: '1' },
-            { label: 'Takeout', value: '0' },
+            { label: 'Nấu tại nhà', value: '1' },
+            { label: 'Đặt mua ngoài', value: '0' },
           ]}
         />
 
@@ -138,7 +118,7 @@ const Home = () => {
             type="submit"
             className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            Submit
+            Gửi thông tin
           </button>
         </div>
       </form>
