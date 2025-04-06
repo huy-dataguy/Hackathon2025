@@ -1,12 +1,11 @@
+import { useState, useRef } from "react";
 import { ChatInput } from "../../components/custom/chatinput";
 import { PreviewMessage, ThinkingMessage } from "../../components/custom/message";
 import { useScrollToBottom } from '../../components/custom/use-scroll-to-bottom';
-import { useState, useRef } from "react";
 import { Overview } from "../../components/custom/overview";
 import { Header } from "../../components/custom/header";
 import { v4 as uuidv4 } from 'uuid';
-
-const socket = new WebSocket("ws://localhost:8090"); //change to your websocket endpoint
+import { useSendMessageMutation } from '../../redux/features/dish/salusApi'
 
 export function Chat() {
   const [messagesContainerRef, messagesEndRef] = useScrollToBottom();
@@ -16,56 +15,46 @@ export function Chat() {
 
   const messageHandlerRef = useRef(null);
 
+  const [sendMessage] = useSendMessageMutation(); 
+
   const cleanupMessageHandler = () => {
     if (messageHandlerRef.current && socket) {
       socket.removeEventListener("message", messageHandlerRef.current);
       messageHandlerRef.current = null;
     }
   };
-
   async function handleSubmit(text) {
-    if (!socket || socket.readyState !== WebSocket.OPEN || isLoading) return;
-
-    const messageText = text || question;
-    setIsLoading(true);
-    cleanupMessageHandler();
-    
+    if (!text) return;
+  
     const traceId = uuidv4();
-    setMessages(prev => [...prev, { content: messageText, role: "user", id: traceId }]);
-    socket.send(messageText);
+    setMessages(prev => [...prev, { content: text, role: "user", id: traceId }]);
+    setIsLoading(true);
     setQuestion("");
-
+  
     try {
-      const messageHandler = (event) => {
-        setIsLoading(false);
-        if (event.data.includes("[END]")) {
-          return;
+      const res = await sendMessage(text).unwrap();
+  
+      const content = res?.response || "Không có phản hồi.";
+  
+      setMessages(prev => [
+        ...prev,
+        {
+          content,
+          role: "assistant",
+          id: uuidv4()
         }
-        
-        setMessages(prev => {
-          const lastMessage = prev[prev.length - 1];
-          const newContent = lastMessage?.role === "assistant" 
-            ? lastMessage.content + event.data 
-            : event.data;
-          
-          const newMessage = { content: newContent, role: "assistant", id: traceId };
-          return lastMessage?.role === "assistant"
-            ? [...prev.slice(0, -1), newMessage]
-            : [...prev, newMessage];
-        });
-
-        if (event.data.includes("[END]")) {
-          cleanupMessageHandler();
-        }
-      };
-
-      messageHandlerRef.current = messageHandler;
-      socket.addEventListener("message", messageHandler);
-    } catch (error) {
-      console.error("WebSocket error:", error);
+      ]);
+    } catch (err) {
+      console.error("API error:", err);
+      setMessages(prev => [
+        ...prev,
+        { content: "🚫 Đã xảy ra lỗi khi xử lý câu hỏi", role: "assistant", id: uuidv4() }
+      ]);
+    } finally {
       setIsLoading(false);
     }
   }
+  
 
   return (
     <div className="flex flex-col min-w-0 h-dvh bg-background">

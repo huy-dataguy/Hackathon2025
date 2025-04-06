@@ -1,8 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import getBaseUrl from '../../../utils/getBaseURL';
+import getChatUrl from '../../../utils/getChatUrl';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: `${getBaseUrl()}`,
+   
     credentials: 'include',
     prepareHeaders: (headers) => {
         const token = localStorage.getItem('token');
@@ -37,19 +39,32 @@ const foodApi = createApi({
             invalidatesTags: ['Dishes'],
         }),
         addDish: builder.mutation({
-            query: (newInfor) => ({
-                    url: '/app/salus/food-image', 
+            query: (newDish) => ({
+                url: '/app/salus/food-image',
                 method: 'POST',
-                body: newInfor,
+                body: newDish,
             }),
             invalidatesTags: ['Dishes'],
-        })
+        }),
+      
+
+        fetchHistory: builder.query({
+            query: ({ from, to }) => ({
+                url: '/app/api/food-history/static',
+                params: { from, to },  // Pass `from` and `to` as query parameters
+            }),
+            invalidatesTags: ['Dishes'], // This will invalidate the 'Dishes' tag
+        }),
+
+     
+          
         
        
+
 
     })
 });
 
 
-export const { useAddInforMutation, useAddDishMutation } = foodApi;
+export const { useAddInforMutation, useAddDishMutation, useFetchHistoryQuery, useGetPlanningMutation} = foodApi;
 export default foodApi;

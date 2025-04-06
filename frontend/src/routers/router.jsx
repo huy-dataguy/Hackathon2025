@@ -8,6 +8,8 @@ import SettingProfile from "../pages/SettingProfile";
 import CaptureMyDish from "../pages/addImageDish/CaptureMyDish";
 import Diet from "../pages/Diet";
 import Chat from "../pages/chat/Chat";
+import BarChart from "../pages/test";
+import LineChart from "../pages/test";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Profile />
+        element: <LineChart />
       },
       {
         path: "/chat",

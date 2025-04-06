@@ -1,112 +1,77 @@
-import React from 'react';
-import InputField from './addImageDish/InputField';
-import SelectField from './addImageDish/SelectField';
-import { useForm } from 'react-hook-form';
-import Swal from 'sweetalert2';
+// components/LineChart.jsx
+import React from "react";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-const Home = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+// Đăng ký các thành phần cần dùng của Chart.js
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-  const onSubmit = async (data) => {
-    console.log(data);
-    Swal.fire('Submitted!', JSON.stringify(data, null, 2), 'success');
+const LineChart = () => {
+  const data = {
+    labels: ["Ngày 1", "Ngày 2", "Ngày 3", "Ngày 4", "Ngày 5"], // Các ngày
+    datasets: [
+      {
+        label: "Lượng calo ăn",
+        data: [2200, 2500, 2100, 2300, 2400], // Dữ liệu calo ăn mỗi ngày
+        borderColor: "rgba(34, 197, 94, 1)", // Màu đường line
+        backgroundColor: "rgba(34, 197, 94, 0.2)", // Màu nền của đường line
+        fill: true, // Làm nền cho biểu đồ
+        tension: 0.4, // Làm cho đường line mềm mại
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Lượng Calo ăn theo ngày",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Ngày",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Calo (kcal)",
+        },
+        beginAtZero: true,
+      },
+    },
   };
 
   return (
-    <div className="max-w-sm mx-auto mt-8">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <InputField
-          label="Enter your age"
-          name="age"
-          type="number"
-          register={register}
-          placeholder="Enter your age"
-        />
-
-        <InputField
-          label="Enter your height (in cm)"
-          name="height"
-          type="number"
-          register={register}
-          placeholder="Enter your height"
-        />
-
-        <InputField
-          label="Enter your weight (in kg)"
-          name="weight"
-          type="number"
-          register={register}
-          placeholder="Enter your weight"
-        />
-
-        <SelectField
-          label="Gender"
-          name="gender"
-          register={register}
-          options={[
-            { label: 'Male', value: 'male' },
-            { label: 'Female', value: 'female' },
-          ]}
-        />
-
-        <SelectField
-          label="Activity Level"
-          name="activity"
-          register={register}
-          options={[
-            { label: '1/7', value: '1' },
-            { label: '2/7', value: '2' },
-            { label: '3/7', value: '3' },
-            { label: '4/7', value: '4' },
-            { label: '5/7', value: '5' },
-            { label: '6/7', value: '6' },
-            { label: '7/7', value: '7' },
-          ]}
-        />
-
-        <SelectField
-          label="Diet Type"
-          name="diet"
-          register={register}
-          options={[
-            { label: 'Vegetarian', value: 'vegetarian' },
-            { label: 'Non-Vegetarian', value: 'non-vegetarian' },
-          ]}
-        />
-
-        <SelectField
-          label="Taste Preference"
-          name="taste"
-          register={register}
-          options={[
-            { label: 'Sweet', value: 'sweet' },
-            { label: 'Salty', value: 'salty' },
-            { label: 'Spicy', value: 'spicy' },
-            { label: 'Sour', value: 'sour' },
-          ]}
-        />
-
-        <SelectField
-          label="Meal Type"
-          name="mealType"
-          register={register}
-          options={[
-            { label: 'Homemade', value: 'homemade' },
-            { label: 'Takeout', value: 'takeout' },
-          ]}
-        />
-
-        <div className="text-center mt-4">
-          <button
-            type="submit"
-            className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
+    <div className="bg-white shadow-xl rounded-2xl p-6 max-w-3xl mx-auto">
+      <Line data={data} options={options} />
     </div>
   );
 };
 
-export default Home;
+export default LineChart;

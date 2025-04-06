@@ -14,13 +14,13 @@ const DishCard = ({ dish }) => {
     }
 
     return (
-        <div className="rounded-2xl border hover:shadow-lg transition-shadow duration-300 p-4 bg-white">
+        <div className="rounded-2xl w-full border hover:shadow-lg transition-shadow duration-300  bg-white">
             <div className="flex flex-col sm:flex-row gap-6 sm:items-center">
                 {/* Image Section */}
                 <div className="sm:w-72 sm:h-72 flex-shrink-0 border rounded-lg overflow-hidden">
                     <Link to={`/dish/${dish?.id}`}>
                         <img
-                            src={getImgUrl(dish?.coverImage) || '/fallback.jpg'}
+                            src={dish.imageUrl}
                             alt={dish?.dish_name || 'Dish'}
                             className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
                         />
@@ -31,26 +31,22 @@ const DishCard = ({ dish }) => {
                 <div className="flex-1">
                     <Link to={`/dish/${dish?.id}`}>
                         <h3 className="text-2xl font-semibold hover:text-blue-600 mb-2">
-                            {dish?.dish_name}
+                            {dish?.foodName}
                         </h3>
                     </Link>
 
                     {/* Nutrition Info */}
                     <div className="grid  text-sm text-gray-700">
 
-                        <p><strong>Time up:</strong> {dish?.nutrition?.time_up} kcal</p>
+                        <p><strong>Time up:</strong> {dish?.createAt}</p>
+                        <br />
                     </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-gray-700 mb-4">
-                        <p><strong>Calories:</strong> {dish?.nutrition?.calories} kcal</p>
-                        <p><strong>Protein:</strong> {dish?.nutrition?.protein}</p>
-                        <p><strong>Fat:</strong> {dish?.nutrition?.total_fat}</p>
-                        <p><strong>Saturated Fat:</strong> {dish?.nutrition?.saturated_fat}</p>
-                        <p><strong>Carbs:</strong> {dish?.nutrition?.carbohydrates}</p>
-                        <p><strong>Sugar:</strong> {dish?.nutrition?.sugar}</p>
-                        <p><strong>Fiber:</strong> {dish?.nutrition?.fiber}</p>
-                        <p><strong>Sodium:</strong> {dish?.nutrition?.sodium}</p>
-                        <p><strong>Cholesterol:</strong> {dish?.nutrition?.cholesterol}</p>
-                        <p><strong>Potassium:</strong> {dish?.nutrition?.potassium}</p>
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm text-gray-700 mb-4">
+                        <p><strong>Calories:</strong> {dish?.calories} kcal</p>
+                        <p><strong>Fat:</strong> {dish?.fat}</p>
+                        <p><strong>Protein:</strong> {dish?.protein}</p>
+                        <p><strong>Sugar:</strong> {dish?.sugar}</p>
+                        <p><strong>Fiber:</strong> {dish?.fiber}</p>
                     </div>
 
                     {/* Price Display
