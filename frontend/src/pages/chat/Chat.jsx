@@ -11,52 +11,49 @@ export function Chat() {
   const [messagesContainerRef, messagesEndRef] = useScrollToBottom();
   const [messages, setMessages] = useState([]);
   const [question, setQuestion] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const messageHandlerRef = useRef(null);
 
-  const [sendMessage, isLoading, error] = useSendMessageMutation();
+  const [sendMessage] = useSendMessageMutation(); 
 
-  if (isLoading) return <div className="text-center py-6">Đang tải dữ liệu...</div>;
-  if (error) return <div className="text-center text-red-600 py-6">Đã xảy ra lỗi khi tải dữ liệu.</div>;
   const cleanupMessageHandler = () => {
     if (messageHandlerRef.current && socket) {
       socket.removeEventListener("message", messageHandlerRef.current);
       messageHandlerRef.current = null;
     }
   };
-  async function handleSubmit(text) {
-    if (!text) return;
+async function handleSubmit(text) {
+  if (!text) return;
 
-    const traceId = uuidv4();
-    setMessages(prev => [...prev, { content: text, role: "user", id: traceId }]);
-    setQuestion("");
+  const traceId = uuidv4();
+  setMessages(prev => [...prev, { content: text, role: "user", id: traceId }]);
+  setIsLoading(true);
+  setQuestion("");
 
+  try {
+    const res = await sendMessage(text).unwrap();
 
+    const content = res?.response || "Không có phản hồi.";
 
-
-    try {
-      const res = await sendMessage(text).unwrap();
-
-      const content = res?.response || "Không có phản hồi.";
-
-      setMessages(prev => [
-        ...prev,
-        {
-          content,
-          role: "assistant",
-          id: uuidv4()
-        }
-      ]);
-    } catch (err) {
-      console.error("API error:", err);
-      setMessages(prev => [
-        ...prev,
-        { content: "🚫 Đã xảy ra lỗi khi xử lý câu hỏi", role: "assistant", id: uuidv4() }
-      ]);
-    } finally {
-      setIsLoading(false);
-    }
+    setMessages(prev => [
+      ...prev,
+      {
+        content,
+        role: "assistant",
+        id: uuidv4()
+      }
+    ]);
+  } catch (err) {
+    console.error("API error:", err);
+    setMessages(prev => [
+      ...prev,
+      { content: "🚫 Đã xảy ra lỗi khi xử lý câu hỏi", role: "assistant", id: uuidv4() }
+    ]);
+  } finally {
+    setIsLoading(false);
   }
+}
 
 
   return (

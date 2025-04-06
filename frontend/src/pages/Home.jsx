@@ -17,7 +17,6 @@ const Home = () => {
       weight: Number(data.weight),
       sportActivity: Number(data.sportActivity),
       isVegetarian: Number(data.isVegetarian),
-      homeCook: Number(data.homeCook),
     };
 
     try {
@@ -102,16 +101,8 @@ const Home = () => {
           ]}
         />
 
-        {/* Loại bữa ăn */}
-        <SelectField
-          label="Loại bữa ăn thường dùng"
-          name="homeCook"
-          register={register}
-          options={[
-            { label: 'Nấu tại nhà', value: '1' },
-            { label: 'Đặt mua ngoài', value: '0' },
-          ]}
-        />
+        
+    
 
         <div className="text-center mt-4">
           <button
