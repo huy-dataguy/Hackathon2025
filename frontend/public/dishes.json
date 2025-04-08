@@ -1,7 +1,7 @@
 [
     {
       "id": 1,
-      "book_name": "Grilled Chicken Salad",
+      "dish_name": "Grilled Chicken Salad",
       "coverImage": "book-1.png",
       "nutrition": {
         "time_up": "2025-04-05T10:00:00Z",
@@ -19,7 +19,7 @@
     },
     {
       "id": 2,
-      "book_name": "Beef Pho",
+      "dish_name": "Beef Pho",
       "coverImage": "book-2.png",
       "nutrition": {
         "time_up": "2025-04-05T10:05:00Z",
@@ -37,7 +37,7 @@
     },
     {
       "id": 3,
-      "book_name": "Vegan Buddha Bowl",
+      "dish_name": "Vegan Buddha Bowl",
       "coverImage": "book-3.png",
       "nutrition": {
         "time_up": "2025-04-05T10:10:00Z",
@@ -55,7 +55,7 @@
     },
     {
       "id": 4,
-      "book_name": "Cheeseburger",
+      "dish_name": "Cheeseburger",
       "coverImage": "book-4.png",
       "nutrition": {
         "time_up": "2025-04-05T10:15:00Z",
@@ -73,7 +73,7 @@
     },
     {
       "id": 5,
-      "book_name": "Spaghetti Bolognese",
+      "dish_name": "Spaghetti Bolognese",
       "coverImage": "book-5.png",
       "nutrition": {
         "time_up": "2025-04-05T10:20:00Z",
@@ -91,7 +91,7 @@
     },
     {
       "id": 6,
-      "book_name": "Avocado Toast",
+      "dish_name": "Avocado Toast",
       "coverImage": "book-6.png",
       "nutrition": {
         "time_up": "2025-04-05T10:25:00Z",
@@ -109,7 +109,7 @@
     },
     {
       "id": 7,
-      "book_name": "Fried Rice",
+      "dish_name": "Fried Rice",
       "coverImage": "book-7.png",
       "nutrition": {
         "time_up": "2025-04-05T10:30:00Z",
@@ -127,7 +127,7 @@
     },
     {
       "id": 8,
-      "book_name": "Sushi Roll",
+      "dish_name": "Sushi Roll",
       "coverImage": "book-8.png",
       "nutrition": {
         "time_up": "2025-04-05T10:35:00Z",
@@ -145,7 +145,7 @@
     },
     {
       "id": 9,
-      "book_name": "Tofu Stir Fry",
+      "dish_name": "Tofu Stir Fry",
       "coverImage": "book-9.png",
       "nutrition": {
         "time_up": "2025-04-05T10:40:00Z",
@@ -163,7 +163,7 @@
     },
     {
       "id": 10,
-      "book_name": "Pancakes with Syrup",
+      "dish_name": "Pancakes with Syrup",
       "coverImage": "book-10.png",
       "nutrition": {
         "time_up": "2025-04-05T10:45:00Z",
@@ -181,7 +181,7 @@
     },
     {
       "id": 11,
-      "book_name": "Egg Fried Noodles",
+      "dish_name": "Egg Fried Noodles",
       "coverImage": "book-11.png",
       "nutrition": {
         "time_up": "2025-04-05T10:50:00Z",
@@ -199,7 +199,7 @@
     },
     {
       "id": 12,
-      "book_name": "Caesar Salad",
+      "dish_name": "Caesar Salad",
       "coverImage": "book-12.png",
       "nutrition": {
         "time_up": "2025-04-05T10:55:00Z",
@@ -217,7 +217,7 @@
     },
     {
       "id": 13,
-      "book_name": "Smoothie Bowl",
+      "dish_name": "Smoothie Bowl",
       "coverImage": "book-13.png",
       "nutrition": {
         "time_up": "2025-04-05T11:00:00Z",
@@ -235,7 +235,7 @@
     },
     {
       "id": 14,
-      "book_name": "Chicken Curry with Rice",
+      "dish_name": "Chicken Curry with Rice",
       "coverImage": "book-14.png",
       "nutrition": {
         "time_up": "2025-04-05T11:05:00Z",
@@ -253,7 +253,7 @@
     },
     {
       "id": 15,
-      "book_name": "Banh Mi",
+      "dish_name": "Banh Mi",
       "coverImage": "book-15.png",
       "nutrition": {
         "time_up": "2025-04-05T11:10:00Z",
@@ -271,7 +271,7 @@
     },
     {
       "id": 16,
-      "book_name": "Shrimp Spring Rolls",
+      "dish_name": "Shrimp Spring Rolls",
       "coverImage": "book-16.png",
       "nutrition": {
         "time_up": "2025-04-05T11:15:00Z",
@@ -289,7 +289,7 @@
     },
     {
       "id": 17,
-      "book_name": "BBQ Pork Ribs",
+      "dish_name": "BBQ Pork Ribs",
       "coverImage": "book-17.png",
       "nutrition": {
         "time_up": "2025-04-05T11:20:00Z",
@@ -307,7 +307,7 @@
     },
     {
       "id": 18,
-      "book_name": "Tom Yum Soup",
+      "dish_name": "Tom Yum Soup",
       "coverImage": "book-18.png",
       "nutrition": {
         "time_up": "2025-04-05T11:25:00Z",
@@ -325,7 +325,7 @@
     },
     {
       "id": 19,
-      "book_name": "Chocolate Cake",
+      "dish_name": "Chocolate Cake",
       "coverImage": "book-19.png",
       "nutrition": {
         "time_up": "2025-04-05T11:30:00Z",
@@ -343,7 +343,7 @@
     },
     {
       "id": 20,
-      "book_name": "Omelette with Veggies",
+      "dish_name": "Omelette with Veggies",
       "coverImage": "book-20.png",
       "nutrition": {
         "time_up": "2025-04-05T11:35:00Z",

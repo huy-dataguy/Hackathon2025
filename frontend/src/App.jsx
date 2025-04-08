@@ -2,17 +2,22 @@
 import { Outlet } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar'
+import { ThemeProvider } from './components/context/ThemeContext'
 
 
 function App() {
 
   return (
     <>
-      <Navbar />
-      <main className='min-h-screen max-w-screen-2xl mx-20 px-4 py-6 font-primary'>
-        <Outlet /> {/* This is where the child components will be rendered */}
-      </main>
-      <footer> Footer</footer>
+      <ThemeProvider>
+      <div className="flex flex-col min-h-screen"> 
+        <Navbar />
+        <main className="flex-grow max-w-screen-2xl mx-auto w-full px-4 font-primary pt-16">
+         <Outlet /> 
+        </main>
+      </div>
+    </ThemeProvider>
+
     </>
   )
 }

@@ -1,11 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../pages/Home";
-import Assistant from "../pages/Assistant";
 import History from "../pages/History";
 import Profile from "../components/Profile";
 import SettingProfile from "../pages/SettingProfile";
-
+import CaptureMyDish from "../pages/addImageDish/CaptureMyDish";
+import Diet from "../pages/Diet";
+import Chat from "../pages/chat/Chat";
+import BarChart from "../pages/test";
+import LineChart from "../pages/test";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,8 +19,8 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/assistant",
-        element: <Assistant />
+        path: "/diet",
+        element: <Diet />
       },
       {
         path: "/history",
@@ -25,12 +28,22 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Profile />
+        element: <LineChart />
       },
       {
-        path: "/settings",
-        element: <SettingProfile />
-      }
+        path: "/chat",
+        element: <Chat />
+      },
+      {
+        path: "/upload_dish",
+        element: <CaptureMyDish />
+      },
+      {
+        path: "/diet",
+        element: <Diet />
+      },
+      
+      
 
     ]
   },

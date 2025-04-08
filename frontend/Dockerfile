@@ -1,20 +1,20 @@
-# Stage-1 & specify a name 'builder'
-FROM  node:latest AS builder
+# Use an official Node runtime as a parent image
+FROM node:22
 
-# Create a directory  and go to the directory 
+# Set the working directory to /app
 WORKDIR /app
 
-# Copy the package.json file to my current directory to install the necessary dependence  
-COPY package.json .
+# Copy the package.json and package-lock.json to the working directory
+COPY ./package*.json ./
 
-# Install the dependence
+# Install the dependencies
 RUN npm install
 
-# Copy other files to my current directory
+# Copy the remaining application files to the working directory
 COPY . .
 
-# Open the port to react
+# Expose port 5173 for the application (Vite default port)
 EXPOSE 5173
 
-# Run nginx in the foreground
-CMD ["npm", "run", "dev"]
+# Start the application (development mode)
+CMD [ "npm", "run", "dev" ]

@@ -1,86 +1,115 @@
 import React from 'react';
+import InputField from './addImageDish/InputField';
+import SelectField from './addImageDish/SelectField';
+import { useForm } from 'react-hook-form';
+import { useAddInforMutation } from '../redux/features/dish/foodApi';
+import Swal from 'sweetalert2';
 
 const Home = () => {
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const [addInfor, { isLoading, isError }] = useAddInforMutation();
+
+  const onSubmit = async (data) => {
+    const formattedData = {
+      ...data,
+      age: Number(data.age),
+      height: Number(data.height),
+      weight: Number(data.weight),
+      sportActivity: Number(data.sportActivity),
+      isVegetarian: Number(data.isVegetarian),
+    };
+
+    try {
+      console.log(formattedData);
+      const res = await addInfor(formattedData).unwrap(); 
+      Swal.fire('Thành công', 'Dữ liệu đã được gửi thành công!', 'success');
+      reset(); 
+      console.log(res);
+    } catch (error) {
+      Swal.fire('Lỗi', 'Gửi dữ liệu thất bại!', 'error');
+      console.error(error);
+    }
+  };
+
   return (
     <div className="max-w-sm mx-auto mt-8">
-      <form className="space-y-6">
-        <label htmlFor="age" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter your age</label>
-        <input
-          id="age"
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        {/* Tuổi */}
+        <InputField
+          label="Nhập tuổi của bạn"
+          name="age"
           type="number"
-          className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Enter your age"
+          register={register}
+          placeholder="Ví dụ: 25"
         />
 
-        <label htmlFor="height" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter your height (in cm)</label>
-        <input
-          id="height"
+        {/* Chiều cao */}
+        <InputField
+          label="Nhập chiều cao (cm)"
+          name="height"
           type="number"
-          className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Enter your height"
+          register={register}
+          placeholder="Ví dụ: 160"
         />
 
-        <label htmlFor="gender" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
-        <select
-          id="gender"
-          className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option value="">Choose your gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
+        {/* Cân nặng */}
+        <InputField
+          label="Nhập cân nặng (kg)"
+          name="weight"
+          type="number"
+          register={register}
+          placeholder="Ví dụ: 60"
+        />
 
-        <label htmlFor="activity" className="block mb-2 text-base font-medium text-gray-900 dark:text-white">Activity Level</label>
-        <select
-          id="activity"
-          className="block w-full px-4 py-3 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option value="">Choose activity level per week</option>
-          <option value="1">1/7</option>
-          <option value="2">2/7</option>
-          <option value="3">3/7</option>
-          <option value="4">4/7</option>
-          <option value="5">5/7</option>
-          <option value="6">6/7</option>
-          <option value="7">7/7</option>
-        </select>
+        {/* Mức độ hoạt động thể thao */}
+        <SelectField
+          label="Mức độ tập thể thao (ngày/tuần)"
+          name="sportActivity"
+          register={register}
+          options={[
+            { label: '1 ngày/tuần', value: '1' },
+            { label: '2 ngày/tuần', value: '2' },
+            { label: '3 ngày/tuần', value: '3' },
+            { label: '4 ngày/tuần', value: '4' },
+            { label: '5 ngày/tuần', value: '5' },
+            { label: '6 ngày/tuần', value: '6' },
+            { label: '7 ngày/tuần', value: '7' },
+          ]}
+        />
 
-        <label htmlFor="diet" className="block mb-2 text-base font-medium text-gray-900 dark:text-white">Diet Type</label>
-        <select
-          id="diet"
-          className="block w-full px-4 py-3 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option value="vegetarian">Vegetarian</option>
-          <option value="non-vegetarian">Non-Vegetarian</option>
-        </select>
+        {/* Chế độ ăn */}
+        <SelectField
+          label="Bạn có ăn chay không?"
+          name="isVegetarian"
+          register={register}
+          options={[
+            { label: 'Ăn chay', value: '1' },
+            { label: 'Không ăn chay', value: '0' },
+          ]}
+        />
 
-        <label htmlFor="taste" className="block mb-2 text-base font-medium text-gray-900 dark:text-white">Taste Preference</label>
-        <select
-          id="taste"
-          className="block w-full px-4 py-3 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option value="">Choose your taste preference</option>
-          <option value="sweet">Sweet</option>
-          <option value="salty">Salty</option>
-          <option value="spicy">Spicy</option>
-          <option value="sour">Sour</option>
-        </select>
+        {/* Vị ưa thích */}
+        <SelectField
+          label="Khẩu vị yêu thích"
+          name="taste"
+          register={register}
+          options={[
+            { label: 'Ngọt', value: 'sweet' },
+            { label: 'Mặn', value: 'salty' },
+            { label: 'Cay', value: 'spicy' },
+            { label: 'Chua', value: 'sour' },
+          ]}
+        />
 
-        <label htmlFor="mealType" className="block mb-2 text-base font-medium text-gray-900 dark:text-white">Meal Type</label>
-        <select
-          id="mealType"
-          className="block w-full px-4 py-3 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option value="homemade">Homemade</option>
-          <option value="takeout">Takeout</option>
-        </select>
+        
+    
 
         <div className="text-center mt-4">
           <button
             type="submit"
             className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            Submit
+            Gửi thông tin
           </button>
         </div>
       </form>
